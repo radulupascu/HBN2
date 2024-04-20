@@ -1,5 +1,6 @@
 import pandas as pd
 import re
+from urllib import urlparse, parse_qs
 
 def extract_words_from_link(url):
     
