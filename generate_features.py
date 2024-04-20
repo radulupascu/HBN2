@@ -3,7 +3,7 @@ import pandas as pd
 import multiprocessing
 
 def generate_features_csv(start_index, finish_index):
-    openai.api_key = 'sk-proj-HnFAJvvZM1tTuvNvzD1aT3BlbkFJRoEm33ygzFPeafn0OjNd'
+    openai.api_key = ''
 
     messages = [ {"role": "system", "content":  
                 "I will give you a bunch of urls to products and/or services. For every link I send you, I need you to reply only it's UNSPSC segment (8 digits), it's segment name, it's UNSPSC family (8 digits), it's family name, it's UNSPSC class (8 digits), it's class name, it's commodity code (8 digits) and it's commodity name. Reply in this format: (segment, segment name, family, family name, class, class name, commodity, commodity name). Please only provide answers in this format, or output \"(None, None, None, None, None, None, None, None)\" if you can't find anything, but please try your best not to come up with nothing."
