@@ -23,10 +23,11 @@ messages = [
   },
 ]
 
+batch_size = 3
 
 def get_product_names(start_index):
 
-  batch_size = 20
+  
 
   df = pd.read_csv('./url_product_extraction_input_dataset.csv')
       
@@ -56,10 +57,10 @@ def get_product_names(start_index):
 
   lista_csv = []
 
-  print(response['message']['content'] + ",")
+  #print(response['message']['content'])
 
   for i in range(0, len(lista)):
-    lista_csv.append(response['message']['content'].split('\n')[i] + ",")
+    lista_csv.append(response['message']['content'].split('\n')[i].split(',')[0])
 
   csv_file = pd.DataFrame(columns=["product_name"])
   new_df = pd.DataFrame(lista_csv, columns=csv_file.columns)
@@ -71,14 +72,16 @@ if __name__ == "__main__":
 
   start_time = time.time()
 
-  noWorkers = multiprocessing.cpu_count()
-  pool = multiprocessing.Pool(noWorkers)
-  for i in range(0, 1000, 20):
-    pool.apply_async(func=get_product_names, args=(i, i+20))
+  # noWorkers = multiprocessing.cpu_count()
+  # pool = multiprocessing.Pool(noWorkers)
+  # for i in range(0, 100, 20):
+  #   pool.apply_async(func=get_product_names, args=(i))
 
-  pool.close()
-  pool.join()
+  # pool.close()
+  # pool.join()
   #get_product_names(0)
+  for i in range(0, 102, batch_size):
+    get_product_names(i)
   end_time = time.time()
   elapsed_time = end_time - start_time
   print(f"Timp petrecut: {elapsed_time} seconds")
