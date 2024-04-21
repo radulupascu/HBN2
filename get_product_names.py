@@ -25,9 +25,9 @@ messages = [
 
 batch_size = 3
 
-def get_product_names(start_index):
+lista_csv = []
 
-  
+def get_product_names(start_index):
 
   df = pd.read_csv('./url_product_extraction_input_dataset.csv')
       
@@ -55,17 +55,17 @@ def get_product_names(start_index):
   )
   #lista.append(response['message']['content'] + ",")
 
-  lista_csv = []
+  
 
   #print(response['message']['content'])
 
   for i in range(0, len(lista)):
     lista_csv.append(response['message']['content'].split('\n')[i].split(',')[0])
 
-  csv_file = pd.DataFrame(columns=["product_name"])
-  new_df = pd.DataFrame(lista_csv, columns=csv_file.columns)
-  csv_file = pd.concat([csv_file, new_df], ignore_index=True)
-  csv_file.to_csv("./product_names.csv", mode='a', header=False, index=False)
+csv_file = pd.DataFrame(columns=["product_name"])
+new_df = pd.DataFrame(lista_csv, columns=csv_file.columns)
+csv_file = pd.concat([csv_file, new_df], ignore_index=True)
+csv_file.to_csv("./product_names.csv", mode='a', header=False, index=False)
 
 
 if __name__ == "__main__":
@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
   noWorkers = multiprocessing.cpu_count()
   pool = multiprocessing.Pool(noWorkers)
-  for i in range(0, 102, batch_size):
+  for i in range(0, 2002, batch_size):
     pool.apply_async(func=get_product_names, args=(i,))
 
   pool.close()
