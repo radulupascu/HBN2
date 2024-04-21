@@ -34,7 +34,7 @@ def get_product_names(start_index):
   lista = []
   for link in df.iloc[start_index:start_index + batch_size, 0]:
     lista.append(link)
-  print(lista)
+  #print(lista)
       
   user_input = '\n'.join(lista)
 
@@ -72,16 +72,16 @@ if __name__ == "__main__":
 
   start_time = time.time()
 
-  # noWorkers = multiprocessing.cpu_count()
-  # pool = multiprocessing.Pool(noWorkers)
-  # for i in range(0, 100, 20):
-  #   pool.apply_async(func=get_product_names, args=(i))
+  noWorkers = multiprocessing.cpu_count()
+  pool = multiprocessing.Pool(noWorkers)
+  for i in range(0, 100, batch_size):
+    pool.apply_async(func=get_product_names, args=(i))
 
-  # pool.close()
-  # pool.join()
+  pool.close()
+  pool.join()
   #get_product_names(0)
-  for i in range(0, 102, batch_size):
-    get_product_names(i)
+  # for i in range(0, 102, batch_size):
+  #   get_product_names(i)
   end_time = time.time()
   elapsed_time = end_time - start_time
   print(f"Timp petrecut: {elapsed_time} seconds")
