@@ -32,7 +32,7 @@ def get_product_names(start_index):
   df = pd.read_csv('./url_product_extraction_input_dataset.csv')
       
   lista = []
-  for link in df.iloc[start_index:start_index + batch_size, 0]:
+  for link in df.iloc[start_index:start_index - 1 + batch_size, 0]:
     lista.append(link)
   #print(lista)
       
