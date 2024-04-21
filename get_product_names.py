@@ -8,7 +8,7 @@ pre_prompt = "Please analyze the provided URL and predict the product or service
 modelfile = """
 FROM llama3
 PARAMETER temperature 0.08
-PARAMETER num_ctx 1024
+PARAMETER num_ctx 2048
 PARAMETER repeat_last_n 0
 PARAMETER seed 1
 SYSTEM {pre_prompt}
@@ -57,7 +57,7 @@ def get_product_names(start_index):
 
   lista_csv = []
 
-  print(response['message']['content'])
+  #print(response['message']['content'])
 
   for i in range(0, len(lista)):
     lista_csv.append(response['message']['content'].split('\n')[i].split(',')[0])
@@ -75,7 +75,7 @@ if __name__ == "__main__":
   noWorkers = multiprocessing.cpu_count()
   pool = multiprocessing.Pool(noWorkers)
   for i in range(0, 102, batch_size):
-    pool.apply_async(func=get_product_names, args=(i,), callback=print("Done with batch a batch of " + str(batch_size)))
+    pool.apply_async(func=get_product_names, args=(i,))
 
   pool.close()
   pool.join()
