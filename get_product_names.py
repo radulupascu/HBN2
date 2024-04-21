@@ -46,8 +46,14 @@ def get_product_names(start_index, finish_index):
               'content': response['message']['content'],
           },
       )
+      lista.append(response['message']['content'])
+    
+  csv_file = pd.DataFrame(columns=["product_name"])
+  new_df = pd.DataFrame(lista, columns=csv_file.columns)
+  csv_file = pd.concat([csv_file, new_df], ignore_index=True)
+  csv_file.to_csv("./product_names.csv", mode='a', header=False, index=False)
 
-      print(response['message']['content'])
+   #print(response['message']['content'])
 
 if __name__ == "__main__":
   # noWorkers = multiprocessing.cpu_count()
